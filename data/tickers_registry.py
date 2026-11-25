@@ -51,9 +51,9 @@ def get_tiingo_ticker ():
 
       #print(f"DataFrame size: {df_bytes:,} bytes ({df_mb:.2f} MB)")
 
-
   return df, buffer_bytes, buffer_mb, df_bytes, df_mb
 
 get_tiingo_ticker()
+
 
 
