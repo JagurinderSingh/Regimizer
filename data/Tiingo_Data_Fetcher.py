@@ -8,14 +8,24 @@ import sys
 from pathlib import Path
 import io
 
+# Add the Regimizer root folder to Python's search path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 # Loads variables from .env into os environment
 load_dotenv()
 
 from ui.ticker_input import ticker_name_input
+from ui.date_input import start_date_input, end_date_input
 
 TIINGO_EOD_API_KEY = os.getenv("Tiingo_EOD_Stock_Price_Data_API_Key")
 
-def fetch_OHLC_data (ticker_name, start_date, end_date):
+def fetch_OHLCV_data ():
+
+  ticker_name = ticker_name_input()
+  start_date = start_date_input()
+  end_date = end_date_input()
 
   url_fetch = f"https://api.tiingo.com/tiingo/daily/{ticker_name}/prices" #URL to hit
   headers = {"Authorization": f"Token {TIINGO_EOD_API_KEY}"} #Attaches my API Key for valid authentication request
@@ -34,12 +44,12 @@ def fetch_OHLC_data (ticker_name, start_date, end_date):
 
     return ohlc_dataframe
 
-# Function Testing
-ticker_name = ticker_name_input()
-start_date = "2012-1-1"
-end_date = "2016-1-1"
+#Function Testing
+#ticker_name = ticker_name_input()
+#start_date = "2012-1-1"
+#end_date = "2016-1-1"
 
-print(fetch_OHLC_data(ticker_name, start_date, end_date))
+ohlcv_historical_data = fetch_OHLCV_data()
 
 
   
